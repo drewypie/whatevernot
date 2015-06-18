@@ -29,15 +29,15 @@ weapons = csv.reader(fa)
 threadnum = raw_input("Threads: ")
 
 def threadGen():
-        i=0
-        fn.seek(int(random.random()*400))
-        fa.seek(int(random.random()*400))
-    #while True:
+    i=0
+    fn.seek(int(random.random()*400))
+    fa.seek(int(random.random()*400))
+    while True:
         print "loop"
         for weapon in weapons:
             i+=1
             #print i
-            #print threading.currentThread().getName() + " : " + weapon[0]
+            print threading.currentThread().getName() + " : " + weapon[0]
             #
             if(getRatio(weapon[0])<.5):
                 print weapon[0] + " : " + str(getRatio(weapon[0]))
