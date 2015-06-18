@@ -45,6 +45,8 @@ def threadGen():
 				print weapon[0] + " : " + str(getRatio(weapon[0]))
 				print removeDollarSign(getMedianPrice(weapon[0]))
 				print removeDollarSign(getLowestPrice(weapon[0]))
+				print str(100 - round(100 * getRatio(weapon[0]))) + " % Off"
+				print "W00T!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 		ListedItems.seek(0)
 		AllListedItems.seek(0)
 			
