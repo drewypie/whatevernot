@@ -9,6 +9,7 @@ import random
 import cProfile
 import threading
 import random
+
 hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
        'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
@@ -23,19 +24,20 @@ fn = open('listeditemsconv.csv')
 weapons = csv.reader(fn)
 
 fa = open('alllisteditems.csv')
-#weapons = csv.reader(fa)
+weapons = csv.reader(fa)
 
 threadnum = raw_input("Threads: ")
 
 def threadGen():
         i=0
         fn.seek(int(random.random()*400))
+        fa.seek(int(random.random()*400))
     #while True:
         print "loop"
         for weapon in weapons:
             i+=1
             #print i
-            print threading.currentThread().getName() + " : " + weapon[0]
+            #print threading.currentThread().getName() + " : " + weapon[0]
             #
             if(getRatio(weapon[0])<.5):
                 print weapon[0] + " : " + str(getRatio(weapon[0]))
@@ -58,7 +60,7 @@ def getJSON(url):
         #print response
         
     except urllib2.HTTPError,err:
-        print err
+        #print err
         
         if err.code == 429:
             #print response.info()
@@ -75,6 +77,7 @@ def getJSON(url):
 
         if err.code == 403:
             #print url
+            print err
             time.sleep(300)
             return fakeJSON()
 
