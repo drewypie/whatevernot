@@ -26,6 +26,7 @@ weapons = csv.reader(ListedItems)
 AllListedItems = open('alllisteditems.csv')
 weapons = csv.reader(AllListedItems)
 
+
 threadnum = raw_input("Threads: ")
 
 def threadGen():
@@ -89,10 +90,7 @@ def getLowestPrice(weapon):
         pricearray = json.load(getJSON(buildURL(weapon)))
     except:
         pricearray = json.loads(getJSON(buildURL(weapon)))
-    try:
-        return pricearray['lowest_price']
-    except:
-        return '1'
+	return pricearray['lowest_price']
 
 def getMedianPrice(weapon):
     try:
