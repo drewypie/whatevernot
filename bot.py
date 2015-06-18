@@ -44,7 +44,7 @@ def threadGen():
                 print removeDollarSign(getMedianPrice(weapon[0]))
                 print removeDollarSign(getLowestPrice(weapon[0]))
         ListedItems.seek(0)
-        fa.seek(0)
+        AllListedItems.seek(0)
             
 def buildURL(weapon):
     url = "http://steamcommunity.com/market/priceoverview/?country=US&currency=1&appid=730&market_hash_name=" + urllib.quote_plus(str(weapon))
