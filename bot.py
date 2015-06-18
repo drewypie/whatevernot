@@ -20,18 +20,18 @@ hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML,
 weaponscsv = open('weapons.csv')
 weapons = csv.reader(weaponscsv)
 
-fn = open('listeditemsconv.csv')
-weapons = csv.reader(fn)
+ListedItems = open('listeditemsconv.csv')
+weapons = csv.reader(ListedItems)
 
-fa = open('alllisteditems.csv')
-weapons = csv.reader(fa)
+AllListedItems = open('alllisteditems.csv')
+weapons = csv.reader(AllListedItems)
 
 threadnum = raw_input("Threads: ")
 
 def threadGen():
     i=0
-    fn.seek(int(random.random()*400))
-    fa.seek(int(random.random()*400))
+    ListedItems.seek(int(random.random()*400))
+    AllListedItems.seek(int(random.random()*400))
     while True:
         print "loop"
         for weapon in weapons:
@@ -43,7 +43,7 @@ def threadGen():
                 print weapon[0] + " : " + str(getRatio(weapon[0]))
                 print removeDollarSign(getMedianPrice(weapon[0]))
                 print removeDollarSign(getLowestPrice(weapon[0]))
-        fn.seek(0)
+        ListedItems.seek(0)
         fa.seek(0)
             
 def buildURL(weapon):
@@ -55,7 +55,7 @@ def getJSON(url):
         #print url
         req = urllib2.Request(url, headers=hdr)
         response = urllib2.urlopen(req)
-        #fn.write(url+"\n")
+        #ListedItems.write(url+"\n")
         return response
         #print response
         
