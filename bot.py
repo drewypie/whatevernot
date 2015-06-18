@@ -104,7 +104,7 @@ def getMedianPrice(weapon):
         return pricearray['lowest_price']
 
 def removeDollarSign(string):
-    return re.sub('&#36;','' ,string)
+    return re.sub('&#36;','',string)
 
 def getRatio(weapon):                        
     return float(removeDollarSign(getLowestPrice(weapon)))/float(removeDollarSign(getMedianPrice(weapon)))
