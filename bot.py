@@ -41,6 +41,7 @@ def threadGen():
             print threading.currentThread().getName() + " : " + weapon[0]
             #
             if(getRatio(weapon[0])<.5):
+            	print "W00T!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
                 print weapon[0] + " : " + str(getRatio(weapon[0]))
                 print removeDollarSign(getMedianPrice(weapon[0]))
                 print removeDollarSign(getLowestPrice(weapon[0]))
@@ -103,7 +104,7 @@ def getMedianPrice(weapon):
         return pricearray['lowest_price']
 
 def removeDollarSign(string):
-    return re.sub('&#36;','',string)
+    return re.sub('&#36;','' ,string)
 
 def getRatio(weapon):                        
     return float(removeDollarSign(getLowestPrice(weapon)))/float(removeDollarSign(getMedianPrice(weapon)))
