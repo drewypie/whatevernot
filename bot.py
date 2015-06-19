@@ -82,7 +82,7 @@ def getjson(url):
         if err.code == 403:
             # print url
             print err
-            time.sleep(300)
+            time.sleep(600)
             return fakejson()
 
 
@@ -99,7 +99,8 @@ def getlowestprice(weapon):
             pricearray = json.loads(getjson(buildurl(weapon)))
         except:
             pass
-    if pricearray['lowest_price'] is not None:
+    # print pricearray.__len__()
+    if pricearray.__len__() > 1:
         return pricearray['lowest_price']
 
 
@@ -113,7 +114,7 @@ def getmedianprice(weapon):
         except:
             pass
     try:
-        if pricearray['median_price'] is not None:
+        if pricearray.__len__() > 1:
             return pricearray['median_price']
     except:
         if pricearray['lowest_price'] is not None:
