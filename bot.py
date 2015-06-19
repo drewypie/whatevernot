@@ -99,8 +99,8 @@ def getlowestprice(weapon):
             pricearray = json.loads(getjson(buildurl(weapon)))
         except:
             pass
-
-    return pricearray['lowest_price']
+    if pricearray['lowest_price'] is not None:
+        return pricearray['lowest_price']
 
 
 def getmedianprice(weapon):
@@ -113,9 +113,11 @@ def getmedianprice(weapon):
         except:
             pass
     try:
-        return pricearray['median_price']
+        if pricearray['median_price'] is not None:
+            return pricearray['median_price']
     except:
-        return pricearray['lowest_price']
+        if pricearray['lowest_price'] is not None:
+            return pricearray['lowest_price']
 
 
 def removedollarsign(string):
