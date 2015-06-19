@@ -9,7 +9,7 @@ import random
 
 hdr = {
     'User-Agent':
-    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+        'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
     'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
     'Accept-Encoding': 'none',
@@ -91,6 +91,7 @@ def fakejson():
 
 
 def getlowestprice(weapon):
+    global pricearray
     try:
         pricearray = json.load(getjson(buildurl(weapon)))
     except:
@@ -103,6 +104,7 @@ def getlowestprice(weapon):
 
 
 def getmedianprice(weapon):
+    global pricearray
     try:
         pricearray = json.load(getjson(buildurl(weapon)))
     except:
@@ -122,6 +124,7 @@ def removedollarsign(string):
 
 def getratio(weapon):
     return float(removedollarsign(getlowestprice(weapon))) / float(removedollarsign(getmedianprice(weapon)))
+
 
 def __main__():
     threads = []
