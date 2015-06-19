@@ -23,7 +23,10 @@ ListedItems = open('listeditemsconv.csv')
 # weapons = csv.reader(ListedItems)
 
 AllListedItems = open('alllisteditems.csv')
-weapons = csv.reader(AllListedItems)
+# weapons = csv.reader(AllListedItems)
+
+AdrenalineItems = open('adrenalineitems.csv')  # specially selected items to increase speed
+weapons = csv.reader(AdrenalineItems)
 
 threadnum = raw_input("Threads: ")
 
@@ -36,6 +39,7 @@ def threadgen():
             i += 1
             # print i
             # print threading.currentThread().getName() + " : " + weapon[0]
+            # print removedollarsign(getmedianprice(weapon[0]))
             #
             if getratio(weapon[0]) < .5:
                 print "W00T!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
@@ -44,13 +48,13 @@ def threadgen():
                 print removedollarsign(getlowestprice(weapon[0]))
                 print str(100 - round(100 * getratio(weapon[0]))) + " % Off"  # COOL
                 print "W00T!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-        ListedItems.seek(0)
-        AllListedItems.seek(0)
+        AdrenalineItems.seek(0)
 
 
 def buildurl(weapon):
     url = "http://steamcommunity.com/market/priceoverview/?country=US&currency=1&appid=730&market_hash_name=" + \
-          urllib.quote_plus(str(weapon))
+          urllib.quote_plus(str(weapon), "%")
+    # print url
     return url
 
 
@@ -102,7 +106,8 @@ def getlowestprice(weapon):
     # print pricearray.__len__()
     if 'lowest_price' in pricearray:
         return pricearray['lowest_price']
-    return '&#36;1'
+    return "&#36;100000"
+
 
 def getmedianprice(weapon):
     global pricearray
