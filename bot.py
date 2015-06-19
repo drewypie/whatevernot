@@ -36,9 +36,9 @@ def threadGen():
                 for weapon in weapons:
 			i+=1
 			#print i
-			print threading.currentThread().getName() + " : " + weapon[0]
+			# print threading.currentThread().getName() + " : " + weapon[0]
 			#
-			if(getRatio(weapon[0])<.5):
+			if getRatio(weapon[0])<.5:
 				print "W00T!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 				print weapon[0] + " : " + str(getRatio(weapon[0]))
 				print removeDollarSign(getMedianPrice(weapon[0]))
@@ -124,7 +124,6 @@ class myThread (threading.Thread):
 		self.counter = counter
 	def run(self):
 		print "Starting " + self.name
-		print_time(self.name, self.counter, 5)
 		print "Exiting " + self.name
 
 def __main__():
