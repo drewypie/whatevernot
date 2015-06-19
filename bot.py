@@ -6,6 +6,7 @@ import time
 import json
 import threading
 import random
+import webbrowser
 
 hdr = {
     'User-Agent':
@@ -35,6 +36,7 @@ def threadgen():
     i = 0
     while True:
         print "loop"
+        print time.time()
         for weapon in weapons:
             i += 1
             # print i
@@ -42,6 +44,7 @@ def threadgen():
             # print removedollarsign(getmedianprice(weapon[0]))
             #
             if getratio(weapon[0]) < .5:
+                webbrowser.open(buildbrowserurl(weapon[0]))
                 print "W00T!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
                 print weapon[0] + " : " + str(getratio(weapon[0]))
                 print removedollarsign(getmedianprice(weapon[0]))
@@ -51,10 +54,16 @@ def threadgen():
         AdrenalineItems.seek(0)
 
 
-def buildurl(weapon):
+def buildjsonurl(weapon):
     url = "http://steamcommunity.com/market/priceoverview/?country=US&currency=1&appid=730&market_hash_name=" + \
           urllib.quote_plus(str(weapon), "%")
     # print url
+    return url
+
+
+def buildbrowserurl(weapon):
+    url = "https://steamcommunity.com/market/listings/730/" + \
+          urllib.quote_plus(str(weapon), "%")
     return url
 
 
@@ -97,10 +106,10 @@ def fakejson():
 def getlowestprice(weapon):
     global pricearray
     try:
-        pricearray = json.load(getjson(buildurl(weapon)))
+        pricearray = json.load(getjson(buildjsonurl(weapon)))
     except:
         try:
-            pricearray = json.loads(getjson(buildurl(weapon)))
+            pricearray = json.loads(getjson(buildjsonurl(weapon)))
         except:
             pass
     # print pricearray.__len__()
@@ -112,10 +121,10 @@ def getlowestprice(weapon):
 def getmedianprice(weapon):
     global pricearray
     try:
-        pricearray = json.load(getjson(buildurl(weapon)))
+        pricearray = json.load(getjson(buildjsonurl(weapon)))
     except:
         try:
-            pricearray = json.loads(getjson(buildurl(weapon)))
+            pricearray = json.loads(getjson(buildjsonurl(weapon)))
         except:
             pass
     try:
