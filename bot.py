@@ -100,9 +100,9 @@ def getlowestprice(weapon):
         except:
             pass
     # print pricearray.__len__()
-    if pricearray.__len__() > 1:
+    if 'lowest_price' in pricearray:
         return pricearray['lowest_price']
-
+    return '&#36;1'
 
 def getmedianprice(weapon):
     global pricearray
@@ -114,14 +114,16 @@ def getmedianprice(weapon):
         except:
             pass
     try:
-        if pricearray.__len__() > 1:
+        if 'median_price' in pricearray:
             return pricearray['median_price']
     except:
-        if pricearray['lowest_price'] is not None:
+        if 'lowest_price' in pricearray:
             return pricearray['lowest_price']
+    return '&#36;1'
 
 
 def removedollarsign(string):
+    # print string
     return re.sub('&#36;', '', string)
 
 
