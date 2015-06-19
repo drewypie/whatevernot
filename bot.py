@@ -31,11 +31,9 @@ threadnum = raw_input("Threads: ")
 
 def threadGen():
 	i=0
-	ListedItems.seek(int(random.random()*400))
-	AllListedItems.seek(int(random.random()*400))
 	while True:
 		print "loop"
-		for weapon in weapons:
+                for weapon in weapons:
 			i+=1
 			#print i
 			print threading.currentThread().getName() + " : " + weapon[0]
@@ -92,14 +90,21 @@ def getLowestPrice(weapon):
 	try:
 		pricearray = json.load(getJSON(buildURL(weapon)))
 	except:
-		pricearray = json.loads(getJSON(buildURL(weapon)))
+		try:
+                    pricearray = json.loads(getJSON(buildURL(weapon)))
+                except:
+                    pass
+
 	return pricearray['lowest_price']
 
 def getMedianPrice(weapon):
 	try:
 		pricearray = json.load(getJSON(buildURL(weapon)))
 	except:
-		pricearray = json.loads(getJSON(buildURL(weapon)))
+		try:
+                        pricearray = json.loads(getJSON(buildURL(weapon)))
+                except:
+                        pass
 	try:
 		return pricearray['median_price']
 	except:
