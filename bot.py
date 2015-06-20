@@ -31,6 +31,24 @@ weapons = csv.reader(AdrenalineItems)
 
 threadnum = raw_input("Threads: ")
 
+checkonlinebool = raw_input("Check Online: ")
+
+def checkonline():
+    global OnlineItems
+    global weapons
+    writer = ""
+    for weapon in weapons:
+        # print weapon[0]
+        html = geturl(buildbrowserurl(weapon[0]))
+        if re.findall('no listings',str(html.read())):
+            print weapon[0]
+        else:
+            writer += weapon[0] + "\n"
+    onlineitemsfile = open("onlineitems.csv","w+")
+    onlineitemsfile.write(writer)
+    onlineitemsfile.close()
+
+
 
 def threadgen():
     i = 0
@@ -44,14 +62,15 @@ def threadgen():
             # print removedollarsign(getmedianprice(weapon[0]))
             #
             if getratio(weapon[0]) < .5:
+                ratio = getratio(weapon[0])
                 webbrowser.open(buildbrowserurl(weapon[0]))
                 print "W00T!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-                print weapon[0] + " : " + str(getratio(weapon[0]))
-                print removedollarsign(getmedianprice(weapon[0]))
+                print weapon[0] + " : " + str(ratio)
+                # print removedollarsign(getmedianprice(weapon[0]))
                 print removedollarsign(getlowestprice(weapon[0]))
-                print str(100 - round(100 * getratio(weapon[0]))) + " % Off"  # COOL
+                print str(100 - round(100 * ratio)) + " % Off"  # COOL
                 print "W00T!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-        AdrenalineItems.seek(0)
+        OnlineItems.seek(0)
 
 
 def buildjsonurl(weapon):
@@ -60,14 +79,13 @@ def buildjsonurl(weapon):
     # print url
     return url
 
-
 def buildbrowserurl(weapon):
     url = "https://steamcommunity.com/market/listings/730/" + \
-          urllib.quote_plus(str(weapon), "%")
+          urllib.quote(str(weapon), "%")
     return url
 
 
-def getjson(url):
+def geturl(url):
     try:
         # print url
         req = urllib2.Request(url, headers=hdr)
@@ -84,7 +102,7 @@ def getjson(url):
             time.sleep(10)
             print("OVERLOAD")
             if random.random() > .25:
-                return getjson(url)
+                return geturl(url)
             else:
                 return fakejson()
 
@@ -106,10 +124,10 @@ def fakejson():
 def getlowestprice(weapon):
     global pricearray
     try:
-        pricearray = json.load(getjson(buildjsonurl(weapon)))
+        pricearray = json.load(geturl(buildjsonurl(weapon)))
     except:
         try:
-            pricearray = json.loads(getjson(buildjsonurl(weapon)))
+            pricearray = json.loads(geturl(buildjsonurl(weapon)))
         except:
             pass
     # print pricearray.__len__()
@@ -121,10 +139,10 @@ def getlowestprice(weapon):
 def getmedianprice(weapon):
     global pricearray
     try:
-        pricearray = json.load(getjson(buildjsonurl(weapon)))
+        pricearray = json.load(geturl(buildjsonurl(weapon)))
     except:
         try:
-            pricearray = json.loads(getjson(buildjsonurl(weapon)))
+            pricearray = json.loads(geturl(buildjsonurl(weapon)))
         except:
             pass
     try:
@@ -146,12 +164,17 @@ def getratio(weapon):
 
 
 def __main__():
+    print checkonlinebool
+    if checkonlinebool is "yes":
+        checkonline()
+    OnlineItems = open('onlineitems.csv')
+    weapons = csv.reader(OnlineItems)
     threads = []
     for i in range(int(threadnum)):
         t = threading.Thread(target=threadgen)
         threads.append(t)
         t.start()
 
-
+# checkonline()
 __main__()
 # cProfile.run('__main__()')
